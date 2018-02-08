@@ -1,0 +1,66 @@
+﻿<div class="modal fade" data-backdrop="static" id="modal-relatorio">
+    <div class="modal-dialog modal-lg" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="modal-title"></h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close" onclick="fechar()">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <form class="m-form" id="form-relatorios" name="form-relatorios">
+                <div class="modal-body">
+
+                    <div class="m-portlet__body">
+                        <div class="row">
+                            <div class="col-md-4">
+                                <div class="form-group">
+                                    <label for="data">
+                                        Data
+                                    </label>
+                                    <input type="text" id="data-visualizacao" class="form-control m-input m-datepicker" readonly>
+                                    <input type="hidden" id="data" name="data" class="form-control m-input">
+                                </div>
+                            </div>
+                            <div class="col-md-8">
+                                <div class="form-group">
+                                    <label for="tipoDespesa">
+                                        Descrição
+                                    </label>
+                                    <input type="text" id="descricao" name="descricao" class="form-control m-input">
+
+                                </div>
+                            </div>
+                            <div class="col-md-6">
+                                <div class="form-group">
+                                    <label for="tipoPagamento">
+                                        Tipo de Relatório
+                                    </label>
+                                    <select class="selectpicker form-control m-input" id="tipoRelatorio" name="tipoRelatorio">
+                                        <option value="0" selected disabled>Selecione</option>
+                                    </select>
+                                </div>
+                            </div>
+                            <div class="col-md-6">
+                                <div class="form-group">
+                                    <label for="comentario">
+                                        Comentário
+                                    </label>
+                                    <input type="text" id="comentario" name="comentario" class="form-control m-input">
+                                </div>
+                            </div>
+                            
+                        </div>
+                    </div>
+
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-dismiss="modal" onclick="fechar()">
+                        Fechar
+                    </button>
+                    <input type="submit" class="btn btn-primary" value="Salvar" id="salvar-relatorio">
+                </div>
+            </form>
+           
+        </div>
+    </div>
+</div>

@@ -1,0 +1,48 @@
+﻿<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8" />
+    <title>@ViewBag.Title - My ASP.NET Application</title>
+    <link rel="shortcut icon" href="assets/demo/default/media/img/logo/favicon.ico" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <script src="https://ajax.googleapis.com/ajax/libs/webfont/1.6.16/webfont.js"></script>
+    <script>
+        WebFont.load({
+            google: { "families": ["Poppins:300,400,500,600,700", "Roboto:300,400,500,600,700"] },
+            active: function () {
+                sessionStorage.fonts = true;
+            }
+        });
+    </script>
+    @Styles.Render("~/Content/css")
+    @Styles.Render("~/Metronic/css")
+</head>
+<body class="m-page--fluid m--skin- m-content--skin-light2 m-header--fixed m-header--fixed-mobile m-aside-left--enabled m-aside-left--skin-dark m-aside-left--offcanvas m-footer--push m-aside--offcanvas-default">
+
+    <div class="m-grid m-grid--hor m-grid--root m-page">
+        <header class="m-grid__item    m-header " data-minimize-offset="200" data-minimize-mobile-offset="200">
+            @{Html.RenderPartial("~/Views/Shared/Includes/_Header.cshtml");}
+        </header>
+
+
+        <div class="m-grid__item m-grid__item--fluid m-grid m-grid--ver-desktop m-grid--desktop m-body">
+            @{Html.RenderPartial("~/Views/Shared/Includes/_Menu.cshtml");}
+            <div class="m-grid__item m-grid__item--fluid m-wrapper">
+                @RenderBody()
+                @RenderSection("SPAViews", required: false)
+            </div>
+            
+        </div>
+        <footer class="m-grid__item m-footer">
+            @{Html.RenderPartial("~/Views/Shared/Includes/_Footer.cshtml");}
+        </footer>
+    </div>
+
+
+    @Scripts.Render("~/bundles/metronic")
+    @Scripts.Render("~/bundles/jqueryval")
+    @Scripts.Render("~/bundles/site")
+    @RenderSection("Scripts", required: false)
+</body>
+
+</html>

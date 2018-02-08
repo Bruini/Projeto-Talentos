@@ -1,0 +1,37 @@
+﻿<div class="modal fade" id="modal-tipoRelatorio">
+    <div class="modal-dialog modal-lg" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="modal-title"></h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close" onclick="fechar()">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <form class="m-form" id="form-tipoRelatorio" name="form-tipoRelatorio" method="post">
+                <div class="modal-body">
+
+                    <div class="m-portlet__body">
+                        <div class="row">
+                            <div class="col-md-12">
+                                <div class="form-group">
+                                    <label for="descricao">
+                                        Descrição
+                                    </label>
+                                    <input type="text" id="descricao" name="descricao" class="form-control m-input">
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-dismiss="modal" onclick="fechar()">
+                        Fechar
+                    </button>
+                    <input type="submit" id="salvar-tipoRelatorio" class="btn btn-primary" value="Salvar">
+                </div>
+            </form>
+        </div>
+    </div>
+</div>

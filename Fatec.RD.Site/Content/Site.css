@@ -1,0 +1,32 @@
+﻿/* Override the default bootstrap behavior where horizontal description lists 
+   will truncate terms that are too long to fit in the left column 
+*/
+.dl-horizontal dt {
+    white-space: normal;
+}
+
+/* Set width on the form input elements since they're 100% wide by default */
+textarea {
+    max-width: 280px;
+}
+
+/* Set padding to display errors that occur during databinding */
+.padding-error {
+    padding-top: 20px;
+}
+
+.m-dropdown.m-dropdown--arrow .m-dropdown__arrow{
+    left: 69% !important;
+}
+
+.m-dropdown.m-dropdown--align-center.m-dropdown--large .m-dropdown__wrapper{
+    margin-left: -260px !important;
+}
+
+body{
+    padding-right: 0px !important;
+}
+
+#tabela-relatoriosDespesa tr:first-child th:first-child i{
+    display: none !important;
+}

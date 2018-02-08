@@ -1,0 +1,1 @@
+var DatatableHtmlTableDemo={init:function(){$(".m-datatable").mDatatable({data:{saveState:{cookie:!1}},search:{input:$("#generalSearch")},columns:[{field:"Deposit Paid",type:"number"},{field:"Order Date",type:"date",format:"YYYY-MM-DD"}]})}};jQuery(document).ready(function(){DatatableHtmlTableDemo.init()});

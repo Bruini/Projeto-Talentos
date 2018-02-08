@@ -1,0 +1,78 @@
+﻿@{
+    Layout = null;
+}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8" />
+    <title>Login - My ASP.NET Application</title>
+    <link rel="shortcut icon" href="assets/demo/default/media/img/logo/favicon.ico" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <script src="https://ajax.googleapis.com/ajax/libs/webfont/1.6.16/webfont.js"></script>
+    <script>
+        WebFont.load({
+            google: { "families": ["Poppins:300,400,500,600,700", "Roboto:300,400,500,600,700"] },
+            active: function () {
+                sessionStorage.fonts = true;
+            }
+        });
+    </script>
+    @Styles.Render("~/Metronic/css")
+    @Styles.Render("~/Content/css")
+</head>
+
+<body class="m-page--fluid m--skin- m-content--skin-light2 m-header--fixed m-header--fixed-mobile m-aside-left--enabled m-aside-left--skin-dark m-aside-left--offcanvas m-footer--push m-aside--offcanvas-default">
+    <div class="m-grid m-grid--hor m-grid--root m-page">
+        <div class="m-grid__item m-grid__item--fluid m-grid m-grid--ver-desktop m-grid--desktop m-body telafundo">
+            <div class="m-grid__item m-grid__item--fluid m-wrapper">
+
+                <div class="container page-login">
+                    <div class="row">
+                        <div class="col-md-12">
+                            <div class="login-title">
+                                <h2>Fatec RD</h2>
+                            </div>
+                            <div class="m-portlet portlet-login">
+                                <div class="m-portlet__body">
+                                    <div class="login-portlet__title">
+                                        <h3>Login</h3>
+                                    </div>
+                                    <form name="FormLogin" id="FormLogin">
+                                        <div class="m-form">
+                                            <div class="form-group">
+                                                <input id="login-email" class="form-control m-input m-input--solid" placeholder="Login ou Email" name="email" type="text" required>
+                                            </div>
+                                            <div class="form-group">
+                                                <input id="login-password" class="form-control m-input m-input--solid" placeholder="Senha" name="password" type="password" value="" required>
+                                            </div>
+                                            <div class="footer-login row">
+                                                <div class="btn-login">
+                                                    <input type="submit" id="login-btnLogin" class="btn m-btn--square m-btn--air btn-success m-btn--bold" value="Login" />
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </form>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-md-12">
+                            <div class="footer-login">
+                                <span>2018 &copy Grupo Viceri.</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+
+            </div>
+        </div>
+    </div>
+    @Scripts.Render("~/bundles/metronic")
+    @Scripts.Render("~/bundles/jqueryval")
+    @Scripts.Render("~/views/login")
+</body>
+
+</html>
+

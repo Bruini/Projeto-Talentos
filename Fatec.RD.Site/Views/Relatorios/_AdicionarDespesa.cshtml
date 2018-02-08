@@ -1,0 +1,47 @@
+﻿<div class="modal fade" id="modal-despesa-relatorio" data-backdrop="static" onload="carregarAcoesAdicionarDespesa()">
+    <div class="modal-dialog modal-lg" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="modal-title">Adicionar ou Remover Despesas</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close" onclick="fechar()">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+                <div class="modal-body">
+
+                        <div class="m-portlet__body">
+                            <ul class="nav nav-tabs  m-tabs-line" role="tablist">
+                                <li class="nav-item m-tabs__item">
+                                    <a class="nav-link m-tabs__link active" data-toggle="tab" href="#despesasVinculadas" role="tab">
+                                        Vinculadas
+                                    </a>
+                                </li>
+                                <li class="nav-item m-tabs__item">
+                                    <a class="nav-link m-tabs__link" data-toggle="tab" href="#despesasDesvinculadas" role="tab">
+                                        Desvinculadas
+                                    </a>
+                                </li>
+                            </ul>
+                            <div class="tab-content">
+                                <div class="tab-pane active" id="despesasVinculadas" role="tabpanel">
+                                    @{Html.RenderPartial("~/Views/Relatorios/_RelatorioDespesaAdicionada.cshtml");}
+                                </div>
+                                <div class="tab-pane" id="despesasDesvinculadas" role="tabpanel">
+                                    @{Html.RenderPartial("~/Views/Relatorios/_RelatorioDespesa.cshtml");}
+                                </div>
+                            </div>
+                        </div>
+
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-dismiss="modal" onclick="fechar()">
+                        Fechar
+                    </button>
+                    <input type="submit" class="btn btn-primary" value="Salvar" onclick="SalvarDespesaRelatorio()">
+                </div>
+
+        </div>
+    </div>
+</div>
+
+

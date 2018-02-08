@@ -1,0 +1,7 @@
+﻿.modal-header .close {
+    cursor: pointer !important;
+}
+.btn.left{
+    position: absolute;
+    left: 25px;
+}
