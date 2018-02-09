@@ -40,7 +40,7 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Modelos\Desepsa.cs" />
+    <Compile Include="Modelos\Despesa.cs" />
     <Compile Include="Modelos\Relatorio.cs" />
     <Compile Include="Modelos\TipoDespesa.cs" />
     <Compile Include="Modelos\TipoPagamento.cs" />

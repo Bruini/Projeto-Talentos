@@ -41,6 +41,7 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="DespesaNegocio.cs" />
+    <Compile Include="Inputs\DespesaInput.cs" />
     <Compile Include="Inputs\RelatorioDespesaInput.cs" />
     <Compile Include="Inputs\TipoInput.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />

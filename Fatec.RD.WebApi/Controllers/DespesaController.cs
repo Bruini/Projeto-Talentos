@@ -1,4 +1,5 @@
 ﻿using Fatec.RD.Bussiness;
+using Fatec.RD.Bussiness.Inputs;
 using Fatec.RD.Dominio.Modelos;
 using Swashbuckle.Swagger.Annotations;
 using System.Net;
@@ -36,7 +37,7 @@ namespace Fatec.RD.WebApi.Controllers
         [SwaggerResponse(HttpStatusCode.InternalServerError, "InternalServerError")]
         [ResponseType(typeof(Despesa))]
         [HttpPost]
-        public IHttpActionResult Post([FromBody] Despesa input)
+        public IHttpActionResult Post([FromBody] DespesaInput input)
         {
             var obj = _appDespesa.Adicionar(input);
             return Created($"{Request?.RequestUri}/{obj.Id}", obj);

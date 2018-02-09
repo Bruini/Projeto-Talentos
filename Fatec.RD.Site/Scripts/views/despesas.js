@@ -102,10 +102,13 @@ function selecionarTipoPagamento() {
 
 /************** Funções com requisições para a API *************/
 function inserir(despesa) {
+    console.log(JSON.stringify(despesa));
+
     $.ajax({
         type: 'POST',
         url: api,
-        data: despesa,
+        data: JSON.stringify(despesa),
+        contentType: 'application/json',
         success: function () {
             alert("Inserido com sucesso!");
         },

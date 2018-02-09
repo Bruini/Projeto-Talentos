@@ -21,11 +21,11 @@ namespace Fatec.RD.Bussiness
         }
 
         /// <summary>
-        /// Método que adiciona um novo tipo de despesa
+        /// Método que adiciona uma nova despesa
         /// </summary>
-        /// <param name="obj">Objeto de Tipo de Despesa</param>
-        /// <returns>Um novo tipo de despesa</returns>
-        public Despesa Adicionar(Despesa obj)
+        /// <param name="obj">Objeto de Despesa</param>
+        /// <returns>Uma nova despesa</returns>
+        public Despesa Adicionar(DespesaInput obj)
         {
 
             var novoObj = new Despesa()
@@ -46,10 +46,10 @@ namespace Fatec.RD.Bussiness
         }
 
         /// <summary>
-        /// Método que seleciona um tipo de despesa pelo Id....
+        /// Método que seleciona uma despesa pelo Id....
         /// </summary>
-        /// <param name="id">Id do tipo de despesa</param>
-        /// <returns>Objeto de Tipo de despesa</returns>
+        /// <param name="id">Id da despesa</param>
+        /// <returns>Objeto de Despesa</returns>
         public Despesa SelecionarPorId(int id)
         {
             var retorno = _despesaRepositorio.SelecionarPorId(id);
