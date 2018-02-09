@@ -14,6 +14,7 @@ namespace Fatec.RD.WebApi.Controllers
     [RoutePrefix("api/Despesa")]
     public class DespesaController : ApiController
     {
+
         DespesaNegocio _appDespesa;
 
         /// <summary>
@@ -27,8 +28,8 @@ namespace Fatec.RD.WebApi.Controllers
         /// <summary>
         /// Método que insere uma nova despesa
         /// </summary>
-        /// <param name="input">Input Despesa</param>
-        /// <remarks>Insere uma nova despesa</remarks>
+        /// <param name="input">Input de Despesa</param>
+        /// <remarks>Insere uma nova Despesa</remarks>
         /// <response code="201">Created</response>
         /// <response code="400">BadRequest</response>
         /// <response code="500">InternalServerError</response>
@@ -43,12 +44,13 @@ namespace Fatec.RD.WebApi.Controllers
             return Created($"{Request?.RequestUri}/{obj.Id}", obj);
         }
 
+
         /// <summary>
-        /// Método que altera uma despesa....
+        /// Método que altera uma despesa
         /// </summary>
         /// <param name="id">Id da despesa</param>
         /// <returns></returns>
-        /// <remarks>Deleta uma despesa</remarks>
+        /// <remarks>Altera uma despesa</remarks>
         /// <response code="202">Accepted</response>
         /// <response code="404">BadRequest</response>
         /// <response code="500">InternalServerError</response>
@@ -58,35 +60,14 @@ namespace Fatec.RD.WebApi.Controllers
         [ResponseType(typeof(Despesa))]
         [Route("{id}")]
         [HttpPut]
-        public IHttpActionResult Put(int id, [FromBody] Despesa input)
+        public IHttpActionResult Put(int id, [FromBody] DespesaInput input)
         {
             var obj = _appDespesa.Alterar(id, input);
             return Content(HttpStatusCode.Accepted, obj);
         }
 
         /// <summary>
-        /// Método que exclui uma despesa....
-        /// </summary>
-        /// <param name="id">Id da despesa</param>
-        /// <returns></returns>
-        /// <remarks>Deleta uma despesa</remarks>
-        /// <response code="200">Ok</response>
-        /// <response code="404">BadRequest</response>
-        /// <response code="500">InternalServerError</response>
-        [SwaggerResponse(HttpStatusCode.OK)]
-        [SwaggerResponse(HttpStatusCode.NotFound, "NotFound")]
-        [SwaggerResponse(HttpStatusCode.InternalServerError, "InternalServerError")]
-        [ResponseType(typeof(Despesa))]
-        [Route("{id}")]
-        [HttpDelete]
-        public IHttpActionResult Delete(int id)
-        {
-            _appDespesa.Deletar(id);
-            return Ok();
-        }
-
-        /// <summary>
-        /// Método que obtem uma despesa....
+        /// Método que obtem uma despesa
         /// </summary>
         /// <param name="id">Id da despesa</param>
         /// <returns></returns>
@@ -105,10 +86,11 @@ namespace Fatec.RD.WebApi.Controllers
             return Ok(_appDespesa.SelecionarPorId(id));
         }
 
+
         /// <summary>
-        /// Método que obtem uma lista de despesa....
+        /// Método que obtem uma lista de despesas
         /// </summary>
-        /// <returns>Lista de Despesa</returns>
+        /// <returns>Lista Despesa</returns>
         /// <remarks>Obtem lista de depesa</remarks>
         /// <response code="200">Ok</response>
         /// <response code="400">BadRequest</response>
@@ -121,5 +103,28 @@ namespace Fatec.RD.WebApi.Controllers
         {
             return Ok(_appDespesa.Selecionar());
         }
+
+        /// <summary>
+        /// Método que exclui uma Despesa....
+        /// </summary>
+        /// <param name="id">Id da Despesa</param>
+        /// <returns></returns>
+        /// <remarks>Deleta uma Despesa</remarks>
+        /// <response code="200">Ok</response>
+        /// <response code="404">BadRequest</response>
+        /// <response code="500">InternalServerError</response>
+        [SwaggerResponse(HttpStatusCode.OK)]
+        [SwaggerResponse(HttpStatusCode.NotFound, "NotFound")]
+        [SwaggerResponse(HttpStatusCode.InternalServerError, "InternalServerError")]
+        [ResponseType(typeof(Despesa))]
+        [Route("{id}")]
+        [HttpDelete]
+        public IHttpActionResult Delete(int id)
+        {
+            _appDespesa.Deletar(id);
+            return Ok();
+        }
+
+
     }
 }

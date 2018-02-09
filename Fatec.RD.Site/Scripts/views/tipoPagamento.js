@@ -129,7 +129,7 @@ function fechar() {
 
 /************** Funções com requisições para a API *************/
 function inserir(tipoPagamento) {
-    console.log(tipoPagamento);
+    
     $.ajax({
         type: 'POST',
         url: api,

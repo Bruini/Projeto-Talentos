@@ -7,9 +7,9 @@ namespace Fatec.RD.Dominio.Modelos
     {
         public int Id { get; set; }
         public int IdTipoDespesa { get; set; }
-        public TipoDespesa TipoDespesa { get; set; }
+        public string TipoDespesa { get; set; }
         public int IdTipoPagamento { get; set; }
-        public TipoPagamento TipoPagamento { get; set; }
+        public string TipoPagamento { get; set; }
         public DateTime Data { get; set; }
         public decimal Valor { get; set; }
         public string Comentario { get; set; }
