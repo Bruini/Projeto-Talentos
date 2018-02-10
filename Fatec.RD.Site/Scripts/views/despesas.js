@@ -326,6 +326,7 @@ function selecionarPorId(id) {
         url: api + '/' + id,
         success: function (despesa) {
             retorno = despesa;
+            
         },
         error: function (error) {
             console.log(error);
@@ -342,14 +343,17 @@ function selecionarPorId(id) {
 
 function salvarDespesa() {
     var id = botaoSalvar.attr("data-id");
+
+    var dataSplit = data.val().split("/");
+    var date = new Date(dataSplit[2], dataSplit[1], dataSplit[0]);
     var despesa  = {
         IdTipoDespesa: tipoDespesa.val(),
         IdTipoPagamento: tipoPagamento.val(),
-        Data: data.val(),
-        Valor: valor.val(),
+        Data: date,
+        Valor: valor.val().replace(",","."),
         Comentario: comentario.val()
     };
-
+    console.log(despesa);
     if (id != undefined)
         alterar(id, despesa);
     else
@@ -358,12 +362,20 @@ function salvarDespesa() {
 
 function preencherCampos(despesa) {
 
-    var DataFormatada = new Date(despesa.Data);
-    console.log(DataFormatada);
+    var dataSub = despesa.Data.substring(0, 10);
+    var dataSplit = dataSub.split("-");
+    var date = dataSplit[2] + "/" + dataSplit[1] + "/" + dataSplit[0];
+    var valorDecimal = parseFloat(Math.round(despesa.Valor * 100) / 100).toFixed(2);
 
-    data.val(despesa.Data);
-    valor.val(despesa.Valor);
+    data.val(date);
+    valor.val(valorDecimal);
     comentario.val(despesa.Comentario);
+
+    //SelectPicker
+    tipoDespesa.val(despesa.IdTipoDespesa);
+    tipoPagamento.val(despesa.IdTipoPagamento)
+    tipoDespesa.selectpicker('refresh');
+    tipoPagamento.selectpicker('refresh');
 
     ReMask();
 }
@@ -378,7 +390,8 @@ function limparCampos() {
     formulario.each(function () {
         this.reset();
     });
-
+    tipoDespesa.selectpicker('refresh');
+    tipoPagamento.selectpicker('refresh');
     botaoSalvar.removeAttr('data-id');
 }
 
