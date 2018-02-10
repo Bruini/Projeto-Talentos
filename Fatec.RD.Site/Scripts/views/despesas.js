@@ -17,117 +17,117 @@ selecionarTipoPagamento();
 /***************************************************************/
 
 
-    var t = tabela.mDatatable({
-        translate: {
-            records: {
-                noRecords: "Nenhum resultado encontrado.",
-                processing: "Processando..."
-            },
-            toolbar: {
-                pagination: {
-                    items: {
-                        default: {
-                            first: "Primeira",
-                            prev: "Anterior",
-                            next: "Próxima",
-                            last: "Última",
-                            more: "Mais",
-                            input: "Número da página",
-                            select: "Selecionar tamanho da página"
-                        },
-                        info: 'Exibindo' + ' {{start}} - {{end}} ' + 'de' + ' {{total}} ' + 'resultados'
-                    },
-                }
-            }
+var t = tabela.mDatatable({
+    translate: {
+        records: {
+            noRecords: "Nenhum resultado encontrado.",
+            processing: "Processando..."
         },
-        data: {
-            type: "remote",
-            source: {
-                read: {
-                    method: "GET",
-                    url: api,
-                    map: function (t) {
-                        var e = t;
-                        return void 0 !== t.data && (e = t.data), e
-                    }
-                }
-            },
-            pageSize: 10,
-            serverPaging: !0,
-            serverFiltering: !0,
-            serverSorting: !0
-        },
-        layout: {
-            theme: "default",
-            class: "",
-            scroll: !1,
-            footer: !1
-        },
-        sortable: !0,
-        pagination: !0,
         toolbar: {
-            items: {
-                pagination: {
-                    pageSizeSelect: [10, 20, 30, 50, 100]
+            pagination: {
+                items: {
+                    default: {
+                        first: "Primeira",
+                        prev: "Anterior",
+                        next: "Próxima",
+                        last: "Última",
+                        more: "Mais",
+                        input: "Número da página",
+                        select: "Selecionar tamanho da página"
+                    },
+                    info: 'Exibindo' + ' {{start}} - {{end}} ' + 'de' + ' {{total}} ' + 'resultados'
+                },
+            }
+        }
+    },
+    data: {
+        type: "remote",
+        source: {
+            read: {
+                method: "GET",
+                url: api,
+                map: function (t) {
+                    var e = t;
+                    return void 0 !== t.data && (e = t.data), e
                 }
+
             }
         },
-        search: {
-            input: $("#generalSearch")
+        pageSize: 10,
+        serverPaging: !0,
+        serverFiltering: !0,
+        serverSorting: !0
+    },
+    layout: {
+        theme: "default",
+        class: "",
+        scroll: !1,
+        footer: !1
+    },
+    sortable: !0,
+    pagination: !0,
+    toolbar: {
+        items: {
+            pagination: {
+                pageSizeSelect: [10, 20, 30, 50, 100]
+            }
+        }
+    },
+    search: {
+        input: $("#generalSearch")
+    },
+    columns: [
+        {
+            field: "Data",
+            title: "Data",
+            width: 100,
+            selector: !1,
+            textAlign: "center",
+            sortable: "asc",
+            type: "date",
+            format: "DD/MM/YYYY"
         },
-        columns: [
-            {
-                field: "Data",
-                title: "Data",
-                width: 100,
-                selector: !1,
-                textAlign: "center",
-                sortable: "asc",
-                type: "date",
-                format: "DD/MM/YYYY"
-            },
-            {
-                field: "TipoDespesa",
-                title: "Tipo Despesa",
-                filterable: !1,
-            },
-            {
-                field: "Valor",
-                title: "Valor",
-                
-            },
-            {
-                field: "TipoPagamento",
-                title: "Tipo Pagamento"
-            },
-            {
-                field: "Comentario",
-                title: "Comentário"
-            },
-            //{
-            //    field: "Status",
-            //    title: "Status",
-            //    template: function (t) {
-            //        var e = {
-            //            1: { title: "Pending", class: "m-badge--brand" },
-            //            2: { title: "Delivered", class: " m-badge--metal" },
-            //            3: { title: "Canceled", class: " m-badge--primary" },
-            //            4: { title: "Success", class: " m-badge--success" },
-            //            5: { title: "Info", class: " m-badge--info" },
-            //            6: { title: "Danger", class: " m-badge--danger" },
-            //            7: { title: "Warning", class: " m-badge--warning" }
-            //        };
-            //        return '<span class="m-badge ' + e[t.Status].class + ' m-badge--wide">' + e[t.Status].title + "</span>"
-            //    }
-            //},
-            {
-                field: "Acoes",
-                title: "Ações",
-                width: 50,
-                sortable: false,
-                overflow: "visible",
-                template: function (t, e, a) {
-                    return '\
+        {
+            field: "TipoDespesa",
+            title: "Tipo Despesa",
+            filterable: !1,
+        },
+        {
+            field: "Valor",
+            title: "Valor",
+        },
+        {
+            field: "TipoPagamento",
+            title: "Tipo Pagamento"
+        },
+        {
+            field: "Comentario",
+            title: "Comentário"
+        },
+        //{
+        //    field: "Status",
+        //    title: "Status",
+        //    template: function (t) {
+        //        var e = {
+        //            1: { title: "Pending", class: "m-badge--brand" },
+        //            2: { title: "Delivered", class: " m-badge--metal" },
+        //            3: { title: "Canceled", class: " m-badge--primary" },
+        //            4: { title: "Success", class: " m-badge--success" },
+        //            5: { title: "Info", class: " m-badge--info" },
+        //            6: { title: "Danger", class: " m-badge--danger" },
+        //            7: { title: "Warning", class: " m-badge--warning" }
+        //        };
+        //        return '<span class="m-badge ' + e[t.Status].class + ' m-badge--wide">' + e[t.Status].title + "</span>"
+        //    }
+        //},
+        {
+            field: "Acoes",
+            title: "Ações",
+            width: 50,
+            sortable: false,
+            overflow: "visible",
+            template: function (t, e, a) {
+                return '\
                             <div class="dropdown">\
                                 <a href="#" class="btn m-btn m-btn--hover-accent m-btn--icon m-btn--icon-only m-btn--pill" data-toggle="dropdown">\
                                     <i class="la la-ellipsis-h"></i>\
@@ -141,10 +141,10 @@ selecionarTipoPagamento();
                                     </a>\
                                 </div>\
                             </div>';
-                }
-            }]
-    }),
-        e = t.getDataSourceQuery();
+            }
+        }]
+}),
+    e = t.getDataSourceQuery();
     $("#m_form_status").on("change", function () {
         var e = t.getDataSourceQuery();
         e.Status = $(this).val().toLowerCase(),
@@ -168,8 +168,12 @@ data.datepicker({
     clearBtn: true,
     todayHighlight: true
 });
+
+
 data.mask('00/00/0000');
 valor.mask("000.000,00", { reverse: true });
+
+
 /***************************************************************/
 
 /************* Funções disparadas nos cliques ******************/
@@ -263,7 +267,7 @@ function selecionarTipoPagamento() {
 
 /************** Funções com requisições para a API *************/
 function inserir(despesa) {
-    console.log(JSON.stringify(despesa));
+    
     $.ajax({
         type: 'POST',
         url: api,
@@ -353,10 +357,21 @@ function salvarDespesa() {
 }
 
 function preencherCampos(despesa) {
-    console.log(despesa);
+
+    var DataFormatada = new Date(despesa.Data);
+    console.log(DataFormatada);
+
     data.val(despesa.Data);
     valor.val(despesa.Valor);
     comentario.val(despesa.Comentario);
+
+    ReMask();
+}
+
+function ReMask() {
+    //mascara de dados
+    valor.unmask().mask("000.000,00", { reverse: true });
+    data.unmask().mask('00/00/0000');
 }
 
 function limparCampos() {
