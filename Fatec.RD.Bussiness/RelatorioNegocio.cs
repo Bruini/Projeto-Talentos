@@ -3,6 +3,7 @@ using Fatec.RD.Dominio.Modelos;
 using Fatec.RD.Dominio.ViewModel;
 using Fatec.RD.Infra.Repositorio.Base;
 using Fatec.RD.SharedKernel.Excecoes;
+using System;
 using System.Collections.Generic;
 
 namespace Fatec.RD.Bussiness
@@ -16,6 +17,26 @@ namespace Fatec.RD.Bussiness
         {
             _relatorioRepositorio = new RelatorioRepositorio();
             _relatorioDespesaRepositorio = new RelatorioDespesaRepositorio();
+        }
+
+        /// <summary>
+        /// Método que adiciona um relatorio
+        /// </summary>
+        /// <param name="obj">Objeto de Relatorio</param>
+        /// <returns>Um novo relatorio</returns>
+        public Relatorio Adicionar(RelatorioInput input)
+        {
+            var novoObj = new Relatorio()
+            {
+                IdTipoRelatorio = input.IdTipoRelatorio,
+                Descricao = input.Descricao,
+                Comentario = input.Comentario,
+                DataCriacao = DateTime.Now
+            };
+
+            novoObj.Validar();
+            var retorno = _relatorioRepositorio.Inserir(novoObj);
+            return _relatorioRepositorio.SelecionarPorId(retorno);
         }
 
         /// <summary>

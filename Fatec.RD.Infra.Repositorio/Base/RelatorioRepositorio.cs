@@ -20,6 +20,39 @@ namespace Fatec.RD.Infra.Repositorio.Base
         }
 
         /// <summary>
+        /// Método que deleta um relatorio
+        /// </summary>
+        /// <param name="id">Id do relatorio</param>
+        public void Delete(int id)
+        {
+            _connection.Execute("DELETE FROM Relatorio WHERE Id = @Id", new { Id = id });
+        }
+
+        /// <summary>
+        /// Método que altera um relatorio
+        /// </summary>
+        /// <param name="obj">Objeto Relatorio</param>
+        public void Alterar(Relatorio obj)
+        {
+            var sqlCommand = @"UPDATE Relatorio 
+                                      SET IdTipoRelatorio = @IdTipoRelatorio, Descricao = @Descricao, Comentario = @Comentario
+                                        WHERE Id = @Id";
+
+            _connection.Execute(sqlCommand, obj);
+        }
+
+        /// <summary>
+        /// Método que inseri um relatorio..
+        /// </summary>
+        /// <returns></returns>
+        public int Inserir(Relatorio obj)
+        {
+            return _connection.Query<int>(@"INSERT Relatorio (IdTipoRelatorio, Descricao, Comentario, DataCriacao)
+                                                    VALUES (@IdTipoRelatorio, @Descricao, @Comentario, @DataCriacao)
+                                                        SELECT CAST (SCOPE_IDENTITY() as int)", obj).First();
+        }
+
+        /// <summary>
         /// Método que seleciona uma lista de relatórios..
         /// </summary>
         /// <returns>Lista de relatórios</returns>
@@ -41,7 +74,7 @@ namespace Fatec.RD.Infra.Repositorio.Base
         {
             var sqlCommand = @"SELECT *
                                     FROM Relatorio
-                                        WHERE a.id = @id";
+                                        WHERE id = @id";
 
             return _connection.Query<Relatorio>(sqlCommand, new { id }).FirstOrDefault();
         }
@@ -65,7 +98,7 @@ namespace Fatec.RD.Infra.Repositorio.Base
         }
 
         /// <summary>
-        /// Método que retr=orna, despesas que não estão atreladas a algum relatorio...
+        /// Método que retorna, despesas que não estão atreladas a algum relatorio...
         /// </summary>
         /// <returns>Lista de despesas</returns>
         public List<DespesaViewModel> SelecionarDespesasSemRelatorio()

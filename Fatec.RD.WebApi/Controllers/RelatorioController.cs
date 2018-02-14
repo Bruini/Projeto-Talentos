@@ -1,10 +1,12 @@
 ﻿using Fatec.RD.Bussiness;
 using Fatec.RD.Bussiness.Inputs;
+using Fatec.RD.Dominio.Modelos;
 using Swashbuckle.Swagger.Annotations;
 
 using System.Net;
 using System.Net.Http;
 using System.Web.Http;
+using System.Web.Http.Description;
 
 namespace Fatec.RD.WebApi.Controllers
 {
@@ -22,6 +24,25 @@ namespace Fatec.RD.WebApi.Controllers
         public RelatorioController()
         {
             _appRelatorio = new RelatorioNegocio();
+        }
+
+        /// <summary>
+        /// Método que insere um novo relatorio
+        /// </summary>
+        /// <param name="input">Input de Relatorio</param>
+        /// <remarks>Insere um novo relatorio</remarks>
+        /// <response code="201">Created</response>
+        /// <response code="400">BadRequest</response>
+        /// <response code="500">InternalServerError</response>
+        [SwaggerResponse(HttpStatusCode.Created)]
+        [SwaggerResponse(HttpStatusCode.BadRequest, "BadRequest")]
+        [SwaggerResponse(HttpStatusCode.InternalServerError, "InternalServerError")]
+        [ResponseType(typeof(RelatorioInput))]
+        [HttpPost]
+        public IHttpActionResult Post([FromBody] RelatorioInput input)
+        {
+            var obj = _appRelatorio.Adicionar(input);
+            return Created($"{Request?.RequestUri}/{obj.Id}", obj);
         }
 
         /// <summary>
