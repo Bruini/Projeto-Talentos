@@ -18,6 +18,27 @@ namespace Fatec.RD.Bussiness
             _relatorioRepositorio = new RelatorioRepositorio();
             _relatorioDespesaRepositorio = new RelatorioDespesaRepositorio();
         }
+        /// <summary>
+        /// Método que altera uma Relatorio
+        /// </summary>
+        /// <param name="id">Id do Relatorio </param>
+        /// <param name="input">Objeto de input do Relatorio</param>
+        /// <returns>Objeto de tipo do Relatorio</returns>
+        public Relatorio Alterar(int id, RelatorioInput input)
+        {
+            var obj = this.SelecionarPorId(id);
+
+
+            obj.IdTipoRelatorio = input.IdTipoRelatorio;
+                obj.Descricao = input.Descricao;
+                obj.Comentario = input.Comentario;
+                obj.Validar();
+
+            _relatorioRepositorio.Alterar(obj);
+
+            return obj;
+        }
+
 
         /// <summary>
         /// Método que adiciona um relatorio
@@ -38,7 +59,22 @@ namespace Fatec.RD.Bussiness
             var retorno = _relatorioRepositorio.Inserir(novoObj);
             return _relatorioRepositorio.SelecionarPorId(retorno);
         }
-
+        /// <summary>
+        /// Método que deleta uma Relatorio
+        /// </summary>
+        /// <param name="id">Id do Relatorio</param>
+        public void Deletar(int id)
+        {
+            try
+            {
+                var obj = this.SelecionarPorId(id);
+                _relatorioRepositorio.Delete(id);
+            }
+            catch (Exception ex)
+            {
+                throw new Exception("Aconteceu um erro ao deletar. Talvez esteja deletando ao que ainda esteja realcionado a um registro.");
+            }
+        }
         /// <summary>
         /// Método que seleciona uma lista de relatorio...
         /// </summary>
