@@ -118,5 +118,48 @@ namespace Fatec.RD.WebApi.Controllers
             _appRelatorio.InserirRelatorioDespesa(id, obj);
             return new HttpResponseMessage(HttpStatusCode.Created);
         }
+       
+        
+        /// <summary>
+        /// Método que exclui um Relatorio....
+        /// </summary>
+        /// <param name="id">Id da Relatorio</param>
+        /// <returns></returns>
+        /// <remarks>Deleta uma Relatorio</remarks>
+        /// <response code="200">Ok</response>
+        /// <response code="404">BadRequest</response>
+        /// <response code="500">InternalServerError</response>
+        [SwaggerResponse(HttpStatusCode.OK)]
+        [SwaggerResponse(HttpStatusCode.NotFound, "NotFound")]
+        [SwaggerResponse(HttpStatusCode.InternalServerError, "InternalServerError")]
+        [ResponseType(typeof(Relatorio))]
+        [Route("{id}")]
+        [HttpDelete]
+        public IHttpActionResult Delete(int id)
+        {
+            _appRelatorio.Deletar(id);
+            return Ok();
+        }
+
+        /// <summary>
+        /// Método que altera uma Relatorio
+        /// </summary>
+        /// <param name="id">Id da Relatorio</param>
+        /// <returns></returns>
+        /// <remarks>Altera uma Relatorio</remarks>
+        /// <response code="202">Accepted</response>
+        /// <response code="404">BadRequest</response>
+        /// <response code="500">InternalServerError</response>
+        [SwaggerResponse(HttpStatusCode.Accepted)]
+        [SwaggerResponse(HttpStatusCode.NotFound, "NotFound")]
+        [SwaggerResponse(HttpStatusCode.InternalServerError, "InternalServerError")]
+        [ResponseType(typeof(Relatorio))]
+        [Route("{id}")]
+        [HttpPut]
+        public IHttpActionResult Put(int id, [FromBody] RelatorioInput input)
+        {
+            var obj = _appRelatorio.Alterar(id, input);
+            return Content(HttpStatusCode.Accepted, obj);
+        }
     }
 }
