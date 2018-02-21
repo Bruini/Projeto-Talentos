@@ -1,5 +1,5 @@
 ﻿/*********** Declarando variáveis para facilitar ***************/
-var api = "http://localhost:63649/api/Relatorio/";
+var api = "http://localhost:63649/api/Relatorio";
 var formulario = $("#form-relatorios");
 var body = $("#modal-generic");
 var body = $("#modal-relatorio");
@@ -65,6 +65,8 @@ function selecionarTipoRelatorio() {
 
 function fechar() {
     formulario.validate().destroy();
+    limparCampos();
+   
     $("#btn-add-despesa").remove();
     botaoSalvar.removeAttr("disabled");
 }
@@ -109,17 +111,21 @@ function abrirModalAlterar(id) {
 
 /************** Funções com requisições para a API *************/
 function inserir(relatorio) {
+
+    console.log(relatorio);
     $.ajax({
         type: 'POST',
-        url: '',
-        data: relatorio,
+        url: api,
+        data: JSON.stringify(relatorio),
+        contentType: 'application/json',
         success: function () {
             modalFooter.append(elemento);
             botaoSalvar.attr("disabled", true);
             alert("Inserido com sucesso!");
+            tRelatorioDespesa.reload();
         },
         error: function (error) {
-            console.log(error);
+            console.log(error.responseJSON.error);
         }
     })
 }
@@ -127,13 +133,17 @@ function inserir(relatorio) {
 function alterar(id, relatorio) {
     $.ajax({
         type: 'PUT',
-        url: api + id,
-        data: relatorio,
+        url: api + '/' + id,
+        data: JSON.stringify(relatorio),
+        contentType: 'application/json',
         success: function () {
             alert("Alterado com sucesso!");
+            tRelatorioDespesa.reload();
+            body.modal('hide');
+            limparCampos();
         },
         error: function (error) {
-            console.log(error);
+            alert(error.responseJSON.error);
         }
     })
 }
@@ -141,9 +151,10 @@ function alterar(id, relatorio) {
 function excluir(id) {
     $.ajax({
         type: 'DELETE',
-        url: api + id,
+        url: api + '/' + id,
         success: function () {
             alert("Deletado com sucesso!");
+            tRelatorioDespesa.reload();
         },
         error: function (error) {
             console.log(error);
@@ -152,23 +163,28 @@ function excluir(id) {
 }
 
 function selecionarPorId(id) {
+    $.ajaxSetup({ async: false }); // Força com que ela espere o retorno para prosseguir - Assim consigo pegar o resultado antes dele abrir o modal
+    var retorno;
     $.ajax({
         type: 'GET',
-        url: api + id,
+        url: api + '/' + id,
         success: function (relatorio) {
-            console.log(relatorio);
+            retorno = relatorio;
+
         },
         error: function (error) {
             console.log(error);
         }
-    })
+    });
+    $.ajaxSetup({ async: true });
+    return retorno;
 }
 
 function VincularDespesa(despesas) {
     console.log(despesas);
     $.ajax({
         type: 'POST',
-        url: api + 1 + "/Despesas",
+        url: api + '/' + 1 + "/Despesas",
         data: despesas,
         contentType: "application/json",
         success: function () {
@@ -185,28 +201,48 @@ function VincularDespesa(despesas) {
 /***************************************************************/
 
 /*********************** Funções internas **********************/
-function salvarRelatorio() {
-    var id = $(this).attr("data-id");
-    var relatorio = formulario.serialize();
 
+function salvarRelatorio() {
+    var id = botaoSalvar.attr("data-id");
+
+    var relatorio = {
+        IdTipoRelatorio: tipoRelatorio.val(),
+        Descricao: descricao.val(),
+        Data: data.val(),
+        Comentario: comentario.val()
+    };
     if (id != undefined)
         alterar(id, relatorio);
     else
+        //console.log(relatorio);
         inserir(relatorio);
 }
 
 function preencherCampos(relatorio) {
-    tipoRelatorio.val();
-    descricao.val();
-    comentario.val();
-    dataCriacao.val();
+  
+
+    var dataSub = relatorio.DataCriacao.substring(0, 10);
+    var dataSplit = dataSub.split("-");
+    var date = dataSplit[2] + "/" + dataSplit[1] + "/" + dataSplit[0];
+
+
+    tipoRelatorio.val(relatorio.IdTipoRelatorio);
+    tipoRelatorio.selectpicker('refresh');
+    descricao.val(relatorio.Descricao);
+    comentario.val(relatorio.Comentario);
+    dataVisualizacao.val(date);
+    data.val(date);
+
+    //Remask
+    dataVisualizacao.unmask().mask('00/00/0000');
+    data.unmask().mask('00/00/0000');
 }
 
 function limparCampos() {
     formulario.each(function () {
         this.reset();
     });
-
+    tipoRelatorio.selectpicker('refresh');
     botaoSalvar.removeAttr('data-id');
 }
 
@@ -217,16 +253,16 @@ function formValidation() {
     formulario.validate({
         errorClass: "errorClass",
         rules: {
-            tipoDespesa: { required: true },
+            tipoRelatorio: { required: true },
             data: { required: true },
-            tipoPagamento: { required: true },
-            valor: { required: true }
+            descricao: { required: true },
+            comentario: { required: true }
         },
         messages: {
-            tipoDespesa: { required: "Campo obrigatório." },
+            tipoRelatorio: { required: "Campo obrigatório." },
             data: { required: "Campo obrigatório." },
-            tipoPagamento: { required: "Campo obrigatório." },
-            valor: { required: "Campo obrigatório." /*, minlength: "Campo deve possuir no mínimo {0} caracteres", maxlength: "Campo deve possuir no máximo {0} caracteres"*/ }
+            descricao: { required: "Campo obrigatório." },
+            comentario: { required: "Campo obrigatório." /*, minlength: "Campo deve possuir no mínimo {0} caracteres", maxlength: "Campo deve possuir no máximo {0} caracteres"*/ }
         },
         submitHandler: function (form) {
             salvarRelatorio();

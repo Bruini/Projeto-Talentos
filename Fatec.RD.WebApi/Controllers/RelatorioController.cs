@@ -46,6 +46,25 @@ namespace Fatec.RD.WebApi.Controllers
         }
 
         /// <summary>
+        /// Método que obtem um relatorio
+        /// </summary>
+        /// <returns>Um relatorio</returns>
+        /// <remarks>Obtem um relatorio</remarks>
+        /// <response code="200">Ok</response>
+        /// <response code="400">BadRequest</response>
+        /// <response code="500">InternalServerError</response>
+        [SwaggerResponse(HttpStatusCode.OK)]
+        [SwaggerResponse(HttpStatusCode.OK)]
+        [SwaggerResponse(HttpStatusCode.BadRequest, "BadRequest")]
+        [SwaggerResponse(HttpStatusCode.InternalServerError, "InternalServerError")]
+        [Route("{id}")]
+        [HttpGet]
+        public IHttpActionResult GetRelatorio(int id)
+        {
+            return Ok(_appRelatorio.SelecionarPorId(id));
+        }
+
+        /// <summary>
         /// Método que obtem uma lista de relatorio....
         /// </summary>
         /// <returns>Lista de Despesa</returns>

@@ -201,6 +201,7 @@ function abrirModalExcluir(id) {
 
 function fechar() {
     formulario.validate().destroy();
+    limparCampos();
 }
 
 
