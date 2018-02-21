@@ -90,6 +90,21 @@ function SalvarDespesaRelatorio() {
 
     VincularDespesa(JSON.stringify(obj));
 }
+
+function abrirModalExcluir(id) {
+    if (confirm("Tem certeza que deseja excluir?")) {
+        excluir(id)
+    }
+}
+
+function abrirModalAlterar(id) {
+    formValidation();
+    botaoSalvar.attr("data-id", id);
+    var relatorio = (selecionarPorId(id));
+    preencherCampos(relatorio);
+    titleModal.html("Alterar Despesa");
+    body.modal('show');
+}
 /***************************************************************/
 
 /************** Funções com requisições para a API *************/
@@ -112,7 +127,7 @@ function inserir(relatorio) {
 function alterar(id, relatorio) {
     $.ajax({
         type: 'PUT',
-        url: api + '/' + id,
+        url: api + id,
         data: relatorio,
         success: function () {
             alert("Alterado com sucesso!");
@@ -126,7 +141,7 @@ function alterar(id, relatorio) {
 function excluir(id) {
     $.ajax({
         type: 'DELETE',
-        url: api + '/' + id,
+        url: api + id,
         success: function () {
             alert("Deletado com sucesso!");
         },
@@ -139,7 +154,7 @@ function excluir(id) {
 function selecionarPorId(id) {
     $.ajax({
         type: 'GET',
-        url: api + '/' + id,
+        url: api + id,
         success: function (relatorio) {
             console.log(relatorio);
         },
@@ -165,6 +180,8 @@ function VincularDespesa(despesas) {
         }
     })
 }
+
+
 /***************************************************************/
 
 /*********************** Funções internas **********************/
@@ -221,12 +238,14 @@ function formValidation() {
 var tabelaRelatorioDespesaAdicionada = $("#tabela-relatoriosDespesaAdicionada");
 
 function listarTabelaRelatorioDespesaAdicionada() {
+
+
 }
 /***************************************************************/
 
 /*********************** RelatórioDespesa Desvinculada **********************/
-var tabelaRelatorioDespesa = $("#tabela-relatoriosDespesa");
-var tRelatorioDespesa = tabelaRelatorioDespesa.mDatatable({
+
+var tRelatorioDespesa = tabela.mDatatable({
     translate: {
         records: {
             noRecords: "Nenhum resultado encontrado.",
@@ -254,7 +273,7 @@ var tRelatorioDespesa = tabelaRelatorioDespesa.mDatatable({
         source: {
             read: {
                 method: "GET",
-                url: api + "Despesas",
+                url: api ,
                 map: function (t) {
                     var e = t;
                     return void 0 !== t.data && (e = t.data), e
@@ -295,18 +314,49 @@ var tRelatorioDespesa = tabelaRelatorioDespesa.mDatatable({
             selector: { class: "m-checkbox--solid m-checkbox--brand" }
         },
         {
-            field: "Data",
-            title: "Data",
+            field: "TipoRelatorio",
+            title: "Tipo Relatorio",
         },
         {
-            field: "Valor",
-            title: "Valor",
+            field: "Descricao",
+            title: "Descricao",
         },
         {
             field: "Comentario",
             title: "Comentario",
+        },
+        {
+            field: "Acoes",
+            title: "Ações",
+            width: 50,
+            sortable: false,
+            overflow: "visible",
+            template: function (t, e, a) {
+                return '\
+                            <div class="dropdown">\
+                                <a href="#" class="btn m-btn m-btn--hover-accent m-btn--icon m-btn--icon-only m-btn--pill" data-toggle="dropdown">\
+                                    <i class="la la-ellipsis-h"></i>\
+                                </a>\
+                                <div class="dropdown-menu dropdown-menu-right">\
+                                    <a class="dropdown-item" href="#" onclick="abrirModalAlterar(' + t.Id + ')">\
+                                        <i class="la la-edit"></i> Editar\
+                                    </a>\
+                                    <a class="dropdown-item" href="#" onclick="abrirModalExcluir('+ t.Id + ')">\
+                                        <i class="la la-leaf"></i> Excluir\
+                                    </a>\
+                                </div>\
+                            </div>';
+            }
         }],
-    extensions: { checkbox: { vars: { selectedAllRows: 'selectedAllRows', requestIds: 'requestIds', rowIds: 'meta.Id', }, }, }
+    extensions: {
+        checkbox: {
+            vars: {
+                selectedAllRows: 'selectedAllRows',
+                requestIds: 'requestIds',
+                rowIds: 'meta.Id',
+            },
+        },
+    }
 
 });
 /***************************************************************/
