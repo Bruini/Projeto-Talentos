@@ -9,6 +9,9 @@ var titleModal = $("#modal-title");
 var botaoSalvar = $("#salvar-relatorio");
 var botaoSalvarDespesaRelatorio = $("#salvarDespesaRelatorio");
 var tabela = $("#tabela-relatorios");
+var tabelaRelatorioDespesa = $("#tabela-relatoriosDespesa");
+var tabelaRelatorioDespesaAdicionada = $("#tabela-relatoriosDespesaAdicionada");
+
 
 var tipoRelatorio = $("#tipoRelatorio");
 var descricao = $("#descricao");
@@ -19,6 +22,7 @@ var data = $("#data");
 var date = new Date();
 
 var elemento = '<button type="button" class="btn btn-info left" id="btn-add-despesa" onclick="adicionarDespesaRelatorio()">Adicionar Despesa</button>';
+
 selecionarTipoRelatorio();
 
 /***************************************************************/
@@ -69,9 +73,12 @@ function fechar() {
    
     $("#btn-add-despesa").remove();
     botaoSalvar.removeAttr("disabled");
+
+    
 }
 
 function adicionarDespesaRelatorio() {
+    tRelatorioDespesa.reload();
     body.modal('hide');
     bodyDespesa.modal('show');
 }
@@ -100,12 +107,18 @@ function abrirModalExcluir(id) {
 }
 
 function abrirModalAlterar(id) {
+
     formValidation();
     botaoSalvar.attr("data-id", id);
     var relatorio = (selecionarPorId(id));
     preencherCampos(relatorio);
-    titleModal.html("Alterar Despesa");
+    titleModal.html("Alterar Relatório");
+    modalFooter.append(elemento);
+    
+   
+    listarTabelaRelatorioDespesaAdicionada(id);
     body.modal('show');
+    
 }
 /***************************************************************/
 
@@ -122,7 +135,7 @@ function inserir(relatorio) {
             modalFooter.append(elemento);
             botaoSalvar.attr("disabled", true);
             alert("Inserido com sucesso!");
-            tRelatorioDespesa.reload();
+            tRelatorio.reload();
         },
         error: function (error) {
             console.log(error.responseJSON.error);
@@ -138,7 +151,7 @@ function alterar(id, relatorio) {
         contentType: 'application/json',
         success: function () {
             alert("Alterado com sucesso!");
-            tRelatorioDespesa.reload();
+            tRelatorio.reload();
             body.modal('hide');
             limparCampos();
         },
@@ -154,7 +167,7 @@ function excluir(id) {
         url: api + '/' + id,
         success: function () {
             alert("Deletado com sucesso!");
-            tRelatorioDespesa.reload();
+            tRelatorio.reload();
         },
         error: function (error) {
             console.log(error);
@@ -182,14 +195,19 @@ function selecionarPorId(id) {
 
 function VincularDespesa(despesas) {
     console.log(despesas);
+    var id = botaoSalvar.attr("data-id");
     $.ajax({
         type: 'POST',
-        url: api + '/' + 1 + "/Despesas",
+        url: api + '/' + id + "/Despesas",
         data: despesas,
         contentType: "application/json",
         success: function () {
             alert("Inserido com sucesso!");
+            limparCampos();
+            $("#btn-add-despesa").remove();
+            botaoSalvar.removeAttr("disabled");
             bodyDespesa.modal('hide');
+            tRelatorioDespesa.reload();
         },
         error: function (error) {
             console.log(error);
@@ -271,9 +289,104 @@ function formValidation() {
 }
 
 /***************** RelatórioDespesa Vinculada *****************/
-var tabelaRelatorioDespesaAdicionada = $("#tabela-relatoriosDespesaAdicionada");
 
-function listarTabelaRelatorioDespesaAdicionada() {
+
+function listarTabelaRelatorioDespesaAdicionada(id) {
+    
+  
+    var tRelatorioDespesaAdicionada = tabelaRelatorioDespesaAdicionada.mDatatable({
+        translate: {
+            records: {
+                noRecords: "Nenhum resultado encontrado.",
+                processing: "Processando..."
+            },
+            toolbar: {
+                pagination: {
+                    items: {
+                        default: {
+                            first: "Primeira",
+                            prev: "Anterior",
+                            next: "Próxima",
+                            last: "Última",
+                            more: "Mais",
+                            input: "Número da página",
+                            select: "Selecionar tamanho da página"
+                        },
+                        info: 'Exibindo' + ' {{start}} - {{end}} ' + 'de' + ' {{total}} ' + 'resultados'
+                    },
+                }
+            }
+        },
+        data: {
+            type: "remote",
+            source: {
+                ajax: {
+                    method: "GET",
+                    url: api + "/" + id + "/Despesas",
+                    map: function (t) {
+                        var e = t;
+                        return void 0 !== t.data && (e = t.data), e
+                    }
+                }
+            },
+            pageSize: 10,
+            serverPaging: !0,
+            serverFiltering: !0,
+            serverSorting: !0
+        },
+        layout: {
+            theme: "default",
+            class: "",
+            scroll: !1,
+            footer: !1
+        },
+        sortable: !0,
+        pagination: !0,
+        toolbar: {
+            items: {
+                pagination: {
+                    pageSizeSelect: [10, 20, 30, 50, 100]
+                }
+            }
+        },
+        search: {
+            input: $("#generalSearch")
+        },
+        columns: [
+            {
+
+                field: "Id",
+                title: "#",
+                width: 50,
+                sortable: !1,
+                textAlign: "center",
+                selector: { class: "m-checkbox--solid m-checkbox--brand" }
+            },
+            {
+                field: "Data",
+                title: "Data",
+            },
+            {
+                field: "Valor",
+                title: "Valor",
+            },
+            {
+                field: "Comentario",
+                title: "Comentario",
+            }],
+        extensions: { checkbox: { vars: { selectedAllRows: 'selectedAllRows', requestIds: 'requestIds', rowIds: 'meta.Id', }, }, }
+
+    });
+
+    var teste = api + "/" + id + "/Despesas";
+    console.log(tRelatorioDespesaAdicionada.url);
+
+
+    //console.log(tRelatorioDespesaAdicionada.options.data.source.read.url);
+    //tRelatorioDespesaAdicionada.options.data.source.read.url = teste;
+    //console.log(tRelatorioDespesaAdicionada.options.data.source.read.url);
+
+    //tRelatorioDespesaAdicionada.reload();
 
 
 }
@@ -281,7 +394,97 @@ function listarTabelaRelatorioDespesaAdicionada() {
 
 /*********************** RelatórioDespesa Desvinculada **********************/
 
-var tRelatorioDespesa = tabela.mDatatable({
+var tRelatorioDespesa = tabelaRelatorioDespesa.mDatatable({
+    translate: {
+        records: {
+            noRecords: "Nenhum resultado encontrado.",
+            processing: "Processando..."
+        },
+        toolbar: {
+            pagination: {
+                items: {
+                    default: {
+                        first: "Primeira",
+                        prev: "Anterior",
+                        next: "Próxima",
+                        last: "Última",
+                        more: "Mais",
+                        input: "Número da página",
+                        select: "Selecionar tamanho da página"
+                    },
+                    info: 'Exibindo' + ' {{start}} - {{end}} ' + 'de' + ' {{total}} ' + 'resultados'
+                },
+            }
+        }
+    },
+    data: {
+        type: "remote",
+        source: {
+            read: {
+                method: "GET",
+                url: api + "/" + "Despesas",
+                map: function (t) {
+                    var e = t;
+                    return void 0 !== t.data && (e = t.data), e
+                }
+            }
+        },
+        pageSize: 10,
+        serverPaging: !0,
+        serverFiltering: !0,
+        serverSorting: !0
+    },
+    layout: {
+        theme: "default",
+        class: "",
+        scroll: !1,
+        footer: !1
+    },
+    sortable: !0,
+    pagination: !0,
+    toolbar: {
+        items: {
+            pagination: {
+                pageSizeSelect: [10, 20, 30, 50, 100]
+            }
+        }
+    },
+    search: {
+        input: $("#generalSearch")
+    },
+    columns: [
+        {
+
+            field: "Id",
+            title: "#",
+            width: 50,
+            sortable: !1,
+            textAlign: "center",
+            selector: { class: "m-checkbox--solid m-checkbox--brand" }
+        },
+        {
+            field: "Data",
+            title: "Data",
+        },
+        {
+            field: "Valor",
+            title: "Valor",
+        },
+        {
+            field: "Comentario",
+            title: "Comentario",
+        }],
+    extensions: { checkbox: { vars: { selectedAllRows: 'selectedAllRows', requestIds: 'requestIds', rowIds: 'meta.Id', }, }, }
+
+});
+
+
+/***************************************************************************/
+
+
+/*********************** Exibir lista de relatórios **********************/
+
+var tRelatorio = tabela.mDatatable({
     translate: {
         records: {
             noRecords: "Nenhum resultado encontrado.",

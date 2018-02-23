@@ -23,6 +23,18 @@ namespace Fatec.RD.Infra.Repositorio.Base
         {
             _connection.Execute(@"INSERT RelatorioDespesa (IdDespesa, IdRelatorio)
                                    VALUES (@IdDespesa, @IdRelatorio)", new { IdDespesa = idDespesa, IdRelatorio = idRelatorio });
+
         }
+
+        /// <summary>
+        /// Método que deleta a relação entre Despesa e Relatorio...
+        /// </summary>
+        /// <param name="idDespesa">IdDespesa</param>
+        /// <param name="idRelatorio">IdRelatorio</param>
+        public void Deletar(int idDespesa, int idReletorio)
+        {
+            _connection.Execute(@"DELETE FROM RelatorioDespesa WHERE IdDespesa=@IdDespesa AND IdRelatorio=@IdRelatorio");
+        }
+
     }
 }

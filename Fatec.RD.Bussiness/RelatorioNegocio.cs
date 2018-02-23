@@ -131,5 +131,18 @@ namespace Fatec.RD.Bussiness
                 _relatorioDespesaRepositorio.Inserir(item.IdDespesa, idRelatorio);
             }
         }
+
+        /// <summary>
+        /// Método que deleta a relação de Despesa com relatório...
+        /// </summary>
+        /// <param name="obj">Obj de Input</param>
+        public void DeletarRelatorioDespesa(int idRelatorio, RelatorioDespesaInput obj)
+        {
+            foreach (var item in obj.Chave)
+            {
+                _relatorioDespesaRepositorio.Deletar(item.IdDespesa, idRelatorio);
+            }
+        }
+
     }
 }

@@ -137,8 +137,27 @@ namespace Fatec.RD.WebApi.Controllers
             _appRelatorio.InserirRelatorioDespesa(id, obj);
             return new HttpResponseMessage(HttpStatusCode.Created);
         }
-       
-        
+
+        /// <summary>
+        /// Método que deleta a relacao de relatório e despesa
+        /// </summary>
+        /// <param name="input">Input com lista da relação de relatório e despesa</param>
+        /// <remarks>Deleta vínculo entre as entidade</remarks>
+        /// <response code="200">Ok</response>
+        /// <response code="400">BadRequest</response>
+        /// <response code="500">InternalServerError</response>
+        [SwaggerResponse(HttpStatusCode.Created)]
+        [SwaggerResponse(HttpStatusCode.BadRequest, "BadRequest")]
+        [SwaggerResponse(HttpStatusCode.InternalServerError, "InternalServerError")]
+        [Route("{id}/Despesas")]
+        [HttpDelete]
+        public IHttpActionResult DeleteRelatorioDespesa(int id,RelatorioDespesaInput obj)
+        {
+            _appRelatorio.DeletarRelatorioDespesa(id, obj);
+            return Ok();
+        }
+
+
         /// <summary>
         /// Método que exclui um Relatorio....
         /// </summary>
