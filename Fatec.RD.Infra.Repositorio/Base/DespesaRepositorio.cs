@@ -82,6 +82,7 @@ namespace Fatec.RD.Infra.Repositorio.Base
 
             return _connection.Query<Despesa>(sqlCommand, new { id }).FirstOrDefault();
         }
+            
 
      
     }

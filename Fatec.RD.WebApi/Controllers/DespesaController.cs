@@ -126,5 +126,42 @@ namespace Fatec.RD.WebApi.Controllers
         }
 
 
+        /// <summary>
+        /// Método que soma valor das despesas
+        /// </summary>
+        /// <returns>Valor total</returns>
+        /// <remarks>Valor total das depesas</remarks>
+        /// <response code="200">Ok</response>
+        /// <response code="400">BadRequest</response>
+        /// <response code="500">InternalServerError</response>
+        [SwaggerResponse(HttpStatusCode.OK)]
+        [SwaggerResponse(HttpStatusCode.BadRequest, "BadRequest")]
+        [SwaggerResponse(HttpStatusCode.InternalServerError, "InternalServerError")]
+        [Route("SomaTotal")]
+        [HttpGet]
+        public IHttpActionResult GetSomaTotal()
+        {
+            return Ok(_appDespesa.SomarDespesa());
+        }
+
+        /// <summary>
+        /// Método que soma valor das despesas de um relatorio
+        /// </summary>
+        /// <returns>Valor total</returns>
+        /// <remarks>Valor total das depesas de um relatorio</remarks>
+        /// <response code="200">Ok</response>
+        /// <response code="400">BadRequest</response>
+        /// <response code="500">InternalServerError</response>
+        [SwaggerResponse(HttpStatusCode.OK)]
+        [SwaggerResponse(HttpStatusCode.BadRequest, "BadRequest")]
+        [SwaggerResponse(HttpStatusCode.InternalServerError, "InternalServerError")]
+        [Route("SomaTotal/{id}")]
+        [HttpGet]
+        public IHttpActionResult GetSomaTotalRelaorio(int id)
+        {
+            return Ok(_appDespesa.SomarDespesaRelatorio(id));
+        }
+
+
     }
 }

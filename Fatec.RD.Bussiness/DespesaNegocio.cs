@@ -48,7 +48,7 @@ namespace Fatec.RD.Bussiness
         {
             var obj = this.SelecionarPorId(id);
 
-         
+
             obj.IdTipoDespesa = input.IdTipoDespesa;
             obj.IdTipoPagamento = input.IdTipoPagamento;
             obj.Data = input.Data;
@@ -100,6 +100,41 @@ namespace Fatec.RD.Bussiness
         public List<Despesa> Selecionar()
         {
             return _despesaRepositorio.Selecionar();
+        }
+
+        /// <summary>
+        /// Método que soma valores da Despesas
+        /// </summary>
+        /// <returns>Valor total</returns>
+
+        public decimal SomarDespesa()
+        {
+
+            var obj = this.Selecionar();
+            decimal somaTotal = 0;
+
+            foreach(var item in obj)
+            {
+                somaTotal += item.Valor;
+            }
+
+            return somaTotal;
+
+        }
+
+        public decimal SomarDespesaRelatorio(int id)
+        {
+            RelatorioNegocio relatorio = new RelatorioNegocio();
+            var obj = relatorio.SelecionarDespesasPorRelatorio(id);
+            decimal somaTotal = 0;
+
+            foreach (var item in obj)
+            {
+                somaTotal += item.Valor;
+            }
+
+            return somaTotal;
+            
         }
     }
 }
