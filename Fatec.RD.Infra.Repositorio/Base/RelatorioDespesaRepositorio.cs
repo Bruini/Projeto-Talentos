@@ -31,9 +31,9 @@ namespace Fatec.RD.Infra.Repositorio.Base
         /// </summary>
         /// <param name="idDespesa">IdDespesa</param>
         /// <param name="idRelatorio">IdRelatorio</param>
-        public void Deletar(int idDespesa, int idReletorio)
+        public void Deletar(int idDespesa, int idRelatorio)
         {
-            _connection.Execute(@"DELETE FROM RelatorioDespesa WHERE IdDespesa=@IdDespesa AND IdRelatorio=@IdRelatorio");
+            _connection.Execute(@"DELETE FROM RelatorioDespesa WHERE IdDespesa=@IdDespesa AND IdRelatorio=@IdRelatorio", new { IdDespesa = idDespesa, IdRelatorio = idRelatorio });
         }
 
     }

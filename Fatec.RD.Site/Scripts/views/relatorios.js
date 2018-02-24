@@ -11,6 +11,7 @@ var botaoSalvarDespesaRelatorio = $("#salvarDespesaRelatorio");
 var tabela = $("#tabela-relatorios");
 var tabelaRelatorioDespesa = $("#tabela-relatoriosDespesa");
 var tabelaRelatorioDespesaAdicionada = $("#tabela-relatoriosDespesaAdicionada");
+var dadosVinculados = $("#dadosVinculados");
 
 
 var tipoRelatorio = $("#tipoRelatorio");
@@ -84,7 +85,9 @@ function adicionarDespesaRelatorio() {
 }
 
 function SalvarDespesaRelatorio() {
-    var despesasSelecionadas = $('table tbody .m-checkbox input:checked').toArray().map(function (check) {
+
+    /******************DESVINCULADAS******************/
+    var despesasSelecionadas = $('#tabela-relatoriosDespesa table tbody .m-checkbox input:checked').toArray().map(function (check) {
         return $(check).val();
     });
     var obj = {};
@@ -96,8 +99,23 @@ function SalvarDespesaRelatorio() {
     });
     obj.Chave = objChave;
 
-
     VincularDespesa(JSON.stringify(obj));
+    /***********************************************/
+
+    /******************VINCULADAS******************/
+    var despesasVinculadas = $('#tabela-relatoriosDespesaAdicionada table tbody .m-checkbox input:checked').toArray().map(function (check) {
+        return $(check).val();
+    });
+    obj = {};
+    objChave = [];
+    $.each(despesasVinculadas, function (key, value) {
+        objChave.push({
+            IdDespesa: value
+        });
+    });
+    obj.Chave = objChave;
+    DesvincularDespesa(JSON.stringify(obj));
+    /***********************************************/
 }
 
 function abrirModalExcluir(id) {
@@ -107,16 +125,17 @@ function abrirModalExcluir(id) {
 }
 
 function abrirModalAlterar(id) {
-
+    dadosVinculados.empty();
     formValidation();
     botaoSalvar.attr("data-id", id);
     var relatorio = (selecionarPorId(id));
     preencherCampos(relatorio);
     titleModal.html("Alterar Relatório");
     modalFooter.append(elemento);
+    var dados = listarTabelaRelatorioDespesaAdicionada(id);
     
-   
-    listarTabelaRelatorioDespesaAdicionada(id);
+    prencherVinculadas(dados);
+
     body.modal('show');
     
 }
@@ -194,7 +213,7 @@ function selecionarPorId(id) {
 }
 
 function VincularDespesa(despesas) {
-    console.log(despesas);
+  
     var id = botaoSalvar.attr("data-id");
     $.ajax({
         type: 'POST',
@@ -213,6 +232,28 @@ function VincularDespesa(despesas) {
             console.log(error);
         }
     })
+}
+
+function DesvincularDespesa(despesas) {
+    var id = botaoSalvar.attr("data-id");
+    $.ajax({
+        type: 'DELETE',
+        url: api + '/' + id + "/Despesas",
+        data: despesas,
+        contentType: "application/json",
+        success: function () {
+            alert("Deletado com sucesso!");
+            limparCampos();
+            $("#btn-add-despesa").remove();
+            botaoSalvar.removeAttr("disabled");
+            bodyDespesa.modal('hide');
+            tRelatorioDespesa.reload();
+        },
+        error: function (error) {
+            console.log(error);
+        }
+    })
+
 }
 
 
@@ -292,103 +333,47 @@ function formValidation() {
 
 
 function listarTabelaRelatorioDespesaAdicionada(id) {
-    
-  
-    var tRelatorioDespesaAdicionada = tabelaRelatorioDespesaAdicionada.mDatatable({
-        translate: {
-            records: {
-                noRecords: "Nenhum resultado encontrado.",
-                processing: "Processando..."
-            },
-            toolbar: {
-                pagination: {
-                    items: {
-                        default: {
-                            first: "Primeira",
-                            prev: "Anterior",
-                            next: "Próxima",
-                            last: "Última",
-                            more: "Mais",
-                            input: "Número da página",
-                            select: "Selecionar tamanho da página"
-                        },
-                        info: 'Exibindo' + ' {{start}} - {{end}} ' + 'de' + ' {{total}} ' + 'resultados'
-                    },
-                }
-            }
-        },
-        data: {
-            type: "remote",
-            source: {
-                ajax: {
-                    method: "GET",
-                    url: api + "/" + id + "/Despesas",
-                    map: function (t) {
-                        var e = t;
-                        return void 0 !== t.data && (e = t.data), e
-                    }
-                }
-            },
-            pageSize: 10,
-            serverPaging: !0,
-            serverFiltering: !0,
-            serverSorting: !0
-        },
-        layout: {
-            theme: "default",
-            class: "",
-            scroll: !1,
-            footer: !1
-        },
-        sortable: !0,
-        pagination: !0,
-        toolbar: {
-            items: {
-                pagination: {
-                    pageSizeSelect: [10, 20, 30, 50, 100]
-                }
-            }
-        },
-        search: {
-            input: $("#generalSearch")
-        },
-        columns: [
-            {
 
-                field: "Id",
-                title: "#",
-                width: 50,
-                sortable: !1,
-                textAlign: "center",
-                selector: { class: "m-checkbox--solid m-checkbox--brand" }
-            },
-            {
-                field: "Data",
-                title: "Data",
-            },
-            {
-                field: "Valor",
-                title: "Valor",
-            },
-            {
-                field: "Comentario",
-                title: "Comentario",
-            }],
-        extensions: { checkbox: { vars: { selectedAllRows: 'selectedAllRows', requestIds: 'requestIds', rowIds: 'meta.Id', }, }, }
+    
+    $.ajaxSetup({ async: false }); // Força com que ela espere o retorno para prosseguir - Assim consigo pegar o resultado antes dele abrir o modal
+    var retorno;
+    $.ajax({
+        type: "GET",
+        url: api + "/" + id + "/Despesas",
+        success: function (data) {
+           
+            retorno = data;
+           
+        },error: function (error) {
+            console.log(error);
+        }
+
+
+    });
+    $.ajaxSetup({ async: true });
+    return retorno;
+    
+
+
+
+}
+
+function prencherVinculadas(dados) {
+
+    var html;
+    
+    console.log(dados);
+    $.each(dados, function (i, item) {
+
+        html += '<tr data-row="0" class="m-datatable__row" style="height: 0px;">';
+        html += '<td data-field="Id" class="m-datatable__cell--center m-datatable__cell m-datatable__cell--check"><span style="width: 50px;"><label class="m-checkbox m-checkbox--single m-checkbox--solid m-checkbox--brand"><input type="checkbox" value="' + item.Id + '"><span></span></label></span></td>'; 
+        html += '<td data-field="Data" class="m-datatable__cell"><span style="width: 110px;">' + item.Data + '</span></td>';
+        html += '<td data-field="Valor" class="m-datatable__cell"><span style="width: 110px;">' + item.Valor + '</span></td>';
+        html += '<td data-field="Comentario" class="m-datatable__cell"><span style="width: 110px;">' + item.Comentario + '</span></td>';
 
     });
 
-    var teste = api + "/" + id + "/Despesas";
-    console.log(tRelatorioDespesaAdicionada.url);
-
-
-    //console.log(tRelatorioDespesaAdicionada.options.data.source.read.url);
-    //tRelatorioDespesaAdicionada.options.data.source.read.url = teste;
-    //console.log(tRelatorioDespesaAdicionada.options.data.source.read.url);
-
-    //tRelatorioDespesaAdicionada.reload();
-
-
+    dadosVinculados.html(html);
 }
 /***************************************************************/
 
