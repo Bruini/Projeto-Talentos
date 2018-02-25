@@ -22,7 +22,7 @@
                     </li>
                 </ul>
 
-             
+
 
             </div>
         </div>
@@ -41,22 +41,44 @@
             </div>
             <div class="m-portlet__body">
 
-                <div id="boxPrincipal">
-                    <div id="soma-despesa">
+                <div id="boxPrincipal" class="row col-12 justify-content-center ">
+                    <div class="col-4 soma">
                         <p class="titulo-dash">Soma das despesas</p>
-                        <div id="dinheiro">
-                            <p>Valor : R$ <span id="valorTotal">300,00</span></p>
+                        <div class="dinheiro">
+                            <p>Valor : R$ <span id="valorTotal">0</span></p>
                         </div>
 
-                        <div id="total-despesas">
-                            <p>Total de despesas : <span id="qtdDespesas">5</span></p>
+                        <div class="total-despesas">
+                            <p>Total de despesas : <span id="qtdDespesas">0</span></p>
                         </div>
                     </div>
 
-                </div>
+                    <div class="col-4 offset-1 soma">
+                        <p class="titulo-dash">Soma das despesas do relatório</p>
+                        <div class="dinheiro">
+                            <p>Valor : R$ <span id="valorTotalRelatorio">0</span></p>
+                        </div>
+                        <div class="total-despesas">
+                            <p>Total de despesas : <span id="qtdDespesasRelatorio">0</span></p>
+                        </div>
 
+                        <form>
+
+                            <div class="form-group">
+                                <label for="listaRelatorios">Relatório</label>
+                                <select class="form-control" id="listaRelatorios" name="listaRelatorios" >
+                                    <option selected> Selecione um relatório</option>
+                                    
+                                </select>
+                            </div>
+
+                        </form>
+                        
+                    </div>
+
+                </div>
             </div>
         </div>
-    </div>
 
+    </div>
 </div>
