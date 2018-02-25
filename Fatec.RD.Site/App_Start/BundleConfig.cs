@@ -67,10 +67,14 @@ namespace Fatec.RD.Site
             bundles.Add(new ScriptBundle("~/views/login").Include(
                "~/Scripts/views/login.js"));
 
+            bundles.Add(new ScriptBundle("~/views/dashboard").Include(
+                "~/Scripts/views/dashboard.js"));
+
             bundles.Add(new StyleBundle("~/Content/css").Include(
                  "~/Content/Site.css",
                  "~/Content/Login.css",
-                 "~/Content/Modal.css"));
+                 "~/Content/Modal.css",
+                 "~/Content/Dashboard.css"));
 
             bundles.Add(new StyleBundle("~/Metronic/css").Include(
                 "~/Assets/vendors/custom/fullcalendar/fullcalendar.bundle.css",

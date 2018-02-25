@@ -25,6 +25,7 @@
     <UseGlobalApplicationHostFile />
     <NuGetPackageImportStamp>
     </NuGetPackageImportStamp>
+    <Use64BitIISExpress />
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
     <DebugSymbols>true</DebugSymbols>
@@ -213,6 +214,7 @@
     <Compile Include="App_Start\Startup.Auth.cs" />
     <Compile Include="App_Start\IdentityConfig.cs" />
     <Compile Include="App_Start\WebApiConfig.cs" />
+    <Compile Include="Controllers\DashboardController.cs" />
     <Compile Include="Controllers\DespesasController.cs" />
     <Compile Include="Controllers\LoginController.cs" />
     <Compile Include="Controllers\RelatoriosController.cs" />
@@ -410,6 +412,7 @@
     <Content Include="Assets\vendors\custom\jquery-ui\jquery-ui.bundle.js" />
     <Content Include="Assets\vendors\custom\jqvmap\jqvmap.bundle.css" />
     <Content Include="Assets\vendors\custom\jqvmap\jqvmap.bundle.js" />
+    <Content Include="Content\Dashboard.css" />
     <Content Include="Content\Login.css" />
     <Content Include="Content\Modal.css" />
     <Content Include="Content\Site.css" />
@@ -459,6 +462,7 @@
     <Content Include="Scripts\sammy-0.7.4.js" />
     <Content Include="Scripts\sammy-0.7.4.min.js" />
     <Content Include="Scripts\site.js" />
+    <Content Include="Scripts\views\dashboard.js" />
     <Content Include="Scripts\views\despesas.js" />
     <Content Include="Scripts\views\login.js" />
     <Content Include="Scripts\views\relatorios.js" />
@@ -531,6 +535,8 @@
     <Content Include="Views\TipoRelatorio\Index.cshtml" />
     <Content Include="Views\TipoRelatorio\_Criar.cshtml" />
     <Content Include="Views\TipoRelatorio\_TipoRelatorio.cshtml" />
+    <Content Include="Views\Dashboard\Index.cshtml" />
+    <Content Include="Views\Dashboard\_Dashboard.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

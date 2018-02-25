@@ -1,0 +1,35 @@
+﻿#boxPrincipal {
+    width: 100%;
+    position: relative;
+    text-align: center;
+    font-family: Roboto;
+    vertical-align: middle;
+   
+}
+
+#soma-despesa {
+    width: 30%;
+    border: #2c2e3e 1px solid;
+    background: #f2f3f8;
+}
+
+#dinheiro {
+    color: #07a007;
+    font-size: 1.55rem;
+    padding: 10px 10px 0;
+}
+
+#total-despesas {
+    padding: 0 10px 10px;
+    font-size: 1.10rem;
+    color: #343a40;
+    font-weight: 100;
+}
+
+.titulo-dash {
+    font-size: 1.75rem;
+    margin-bottom: 0;
+    text-align: center;
+    color: #343a40;
+    font-weight: 500;
+}

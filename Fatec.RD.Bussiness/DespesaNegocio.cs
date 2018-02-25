@@ -1,5 +1,6 @@
 ﻿using Fatec.RD.Bussiness.Inputs;
 using Fatec.RD.Dominio.Modelos;
+using Fatec.RD.Dominio.ViewModel;
 using Fatec.RD.Infra.Repositorio.Base;
 using Fatec.RD.SharedKernel.Excecoes;
 using System;
@@ -107,9 +108,9 @@ namespace Fatec.RD.Bussiness
         /// </summary>
         /// <returns>Valor total</returns>
 
-        public decimal SomarDespesa()
+        public SomaDespesaViewModel SomarDespesa()
         {
-
+            SomaDespesaViewModel retorno = new SomaDespesaViewModel();
             var obj = this.Selecionar();
             decimal somaTotal = 0;
 
@@ -118,13 +119,22 @@ namespace Fatec.RD.Bussiness
                 somaTotal += item.Valor;
             }
 
-            return somaTotal;
+            retorno.ValorTotal = somaTotal;
+            retorno.Despesas = obj.Count;
+
+            return retorno;
 
         }
 
-        public decimal SomarDespesaRelatorio(int id)
+        /// <summary>
+        /// Método que soma valores da Despesas de um determinado relatorio
+        /// </summary>
+        /// <returns>Valor total</returns>
+        public SomaDespesaViewModel SomarDespesaRelatorio(int id)
         {
+            SomaDespesaViewModel retorno = new SomaDespesaViewModel();
             RelatorioNegocio relatorio = new RelatorioNegocio();
+
             var obj = relatorio.SelecionarDespesasPorRelatorio(id);
             decimal somaTotal = 0;
 
@@ -133,7 +143,10 @@ namespace Fatec.RD.Bussiness
                 somaTotal += item.Valor;
             }
 
-            return somaTotal;
+            retorno.ValorTotal = somaTotal;
+            retorno.Despesas = obj.Count;
+
+            return retorno;
             
         }
     }

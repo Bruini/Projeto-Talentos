@@ -49,6 +49,7 @@
     <Compile Include="Repositorio\IRepositorioBase.cs" />
     <Compile Include="ViewModel\DespesaViewModel.cs" />
     <Compile Include="ViewModel\RelatorioViewModel.cs" />
+    <Compile Include="ViewModel\SomaDespesaViewModel.cs" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\Fatec.RD.SharedKernel\Fatec.RD.SharedKernel.csproj">
