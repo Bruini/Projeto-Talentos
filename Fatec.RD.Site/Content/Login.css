@@ -16,7 +16,7 @@
 }
 
 .container.page-login .login-title {
-    color: #fff;
+    color: #FFF;
     text-align: center;
     text-transform: uppercase;
     padding: 4rem 0;
@@ -28,7 +28,7 @@
 }
 
 .container.page-login .login-portlet__title {
-    color: #4db3a5;
+    color: #F44336;
     text-align: center;
     padding: 1.75rem 0 !important;
 }
@@ -42,16 +42,16 @@
     padding-bottom: 4rem;
 }
 
-    .container.page-login .m-portlet__body input[type="text"], .container.page-login .m-portlet__body input[type="password"]  {
+    .container.page-login .m-portlet__body input[type="text"], .container.page-login .m-portlet__body input[type="password"] {
         background-color: #dde3ec;
         color: #8290a3 !important;
         padding: 13px;
         border: 0px;
     }
 
-        .container.page-login .m-portlet__body input::placeholder {
-            color: #8290a3 !important;
-        }
+    .container.page-login .m-portlet__body input::placeholder {
+        color: #8290a3 !important;
+    }
 
     .container.page-login .m-portlet__body .btn-login {
         padding-left: 15px;
@@ -98,11 +98,18 @@
 
 .container.page-login .footer-login {
     text-align: center;
-    color: #7a8c9d;
+    color: #ffffff;
 }
 
+.btn-success {
+    color: #fff;
+    background-color: #F44336 !important;
+    border-color: #F44336 !important;
+}
 .telafundo {
-    background-color: #364150 !important;
+    /*background-color: #364150 !important;*/
+    background: -webkit-linear-gradient(-31deg, rgb(255, 205, 210), rgb(213, 0, 0));
+    background: linear-gradient(-31deg, rgb(255, 205, 210), rgb(213, 0, 0));
 }
 
 /***************************************************/
