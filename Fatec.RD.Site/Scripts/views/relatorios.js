@@ -221,7 +221,7 @@ function VincularDespesa(despesas) {
         data: despesas,
         contentType: "application/json",
         success: function () {
-            alert("Inserido com sucesso!");
+            alert("Sucesso!");
             limparCampos();
             $("#btn-add-despesa").remove();
             botaoSalvar.removeAttr("disabled");
@@ -242,7 +242,7 @@ function DesvincularDespesa(despesas) {
         data: despesas,
         contentType: "application/json",
         success: function () {
-            alert("Deletado com sucesso!");
+            //alert("Deletado com sucesso!");
             limparCampos();
             $("#btn-add-despesa").remove();
             botaoSalvar.removeAttr("disabled");
